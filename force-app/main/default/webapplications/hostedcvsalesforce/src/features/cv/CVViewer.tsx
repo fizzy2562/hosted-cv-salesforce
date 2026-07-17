@@ -64,8 +64,15 @@ export function CVViewer({ data }: { data: CVData }) {
       {capturing && (
         <div
           aria-hidden="true"
-          className="pointer-events-none fixed left-0 top-0"
-          style={{ zIndex: -1 }}
+          style={{
+            position: "fixed",
+            left: 0,
+            top: 0,
+            zIndex: -1,
+            pointerEvents: "none",
+            // Keep print root off the styled page tree as much as possible
+            isolation: "isolate",
+          }}
         >
           <CVPrintDocument data={data} showEmail={captureWithEmail} />
         </div>
