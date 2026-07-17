@@ -1,10 +1,14 @@
 {
-  "orgName": "My Saleforce Org",
+  "orgName": "Hosted CV Scratch",
   "edition": "Developer",
-  "features": ["EnableSetPasswordInApi"],
+  "language": "en_US",
+  "features": ["EnableSetPasswordInApi", "Communities", "Sites"],
   "settings": {
     "lightningExperienceSettings": {
       "enableS1DesktopEnabled": true
+    },
+    "communitiesSettings": {
+      "enableNetworksEnabled": true
     },
     "mobileSettings": {
       "enableS1EncryptedStoragePref2": false

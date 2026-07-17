@@ -13,3 +13,6 @@ package.xml
 
 node_modules/
 .DS_Store
+
+# Experimental WebApplication scaffold — org supports UIBundle (GA) instead
+force-app/main/default/webapplications/**
