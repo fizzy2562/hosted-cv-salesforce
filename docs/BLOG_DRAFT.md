@@ -90,7 +90,7 @@ This is a small, complete, visually polished app. It is more approachable than e
 
 ## Try it yourself
 
-1. Clone [github.com/fizzy2562/hosted-cv-salesforce](https://github.com/fizzy2562/hosted-cv-salesforce) (update URL after publish)
+1. Clone [github.com/fizzy2562/hosted-cv-salesforce](https://github.com/fizzy2562/hosted-cv-salesforce)
 2. Deploy to a sandbox
 3. Swap in your `default-cv.ts` content and assets
 4. Publish your Experience Cloud site
