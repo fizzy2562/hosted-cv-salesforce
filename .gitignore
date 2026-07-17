@@ -1,0 +1,30 @@
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Build artifacts (run npm run build before deploy)
+**/dist/
+
+# OS
+.DS_Store
+
+# Env
+.env
+.env.*
+
+# Salesforce local
+.sf/
+.sfdx/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Test / coverage
+coverage/
+playwright-report/
+test-results/
+
+# IDE
+.idea/
+.vscode/
