@@ -28,3 +28,12 @@ test-results/
 # IDE
 .idea/
 .vscode/
+
+# Org-derived GraphQL schema (may reflect private objects)
+**/schema.graphql
+**/*.tsbuildinfo
+
+# Local Salesforce auth / config
+*.pem
+*.key
+auth.json

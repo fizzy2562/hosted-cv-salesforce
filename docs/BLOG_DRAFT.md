@@ -1,115 +1,82 @@
-# Blog draft: I rebuilt my CV on Salesforce Multi-Framework
+# Blog draft: Host your consultant CV on Salesforce Multi-Framework
 
 **Audience:** Consultant Cloud learners and Salesforce professionals exploring React on Experience Cloud.
 
-**Suggested title:** From Vercel to Experience Cloud: hosting a consultant CV with Salesforce Multi-Framework
+**Suggested title:** Ship a recruiter ready CV on Experience Cloud with Salesforce Multi-Framework
 
-**Suggested CTA:** Clone the repo, deploy to a sandbox, and adapt the pattern for your own portfolio or client microsites.
+**Suggested CTA:** Fork the repo, swap in your content, deploy to a scratch org or sandbox, then share your `*.my.site.com` URL.
 
 ---
 
 ## Hook
 
-When Salesforce announced that [Multi-Framework is now GA](https://developer.salesforce.com/blogs/2026/07/build-with-react-on-salesforce-multi-framework-is-now-ga), I had a real project ready to test it: my hosted CV at [ciaran-fitzgerald.com](https://ciaran-fitzgerald.com/).
+When Salesforce announced that [Multi-Framework is now GA](https://developer.salesforce.com/blogs/2026/07/build-with-react-on-salesforce-multi-framework-is-now-ga), I wanted a sample our Consultant Cloud community could actually use: a public, recruiter facing CV built in React and hosted on Experience Cloud.
 
-I originally built it on Next.js and Vercel for speed, a custom domain, and a simple admin flow. That still makes sense for day to day edits. But I also wanted a **public Salesforce reference implementation** our Consultant Cloud community could learn from and reuse.
+The result is an open source DX project you can fork, personalise, and deploy.
 
-So I ported the same React UI into a Salesforce DX project and open sourced it.
+Demo: https://d0y000002jj75uae-dev-ed.my.site.com/hostedcvsalesforce/
 
-## The problem Multi-Framework solves for consultants
+---
 
-For years, polished marketing and portfolio sites on Salesforce meant LWC on LWR, Aura, or heavy Experience Cloud configuration. If you already think in React, npm, and Vite, that context switch hurts.
+## Why this matters for consultants
+
+Polished portfolio sites on Salesforce used to mean LWC on LWR, Aura, or heavy Experience Builder work. If you already think in React, npm, and Vite, that context switch hurts.
 
 Multi-Framework lets you:
 
-- Build with **React + Vite + Tailwind**, the same stack many teams already use
+- Build with **React + Vite + Tailwind**
 - Deploy to **Experience Cloud** for external, recruiter facing sites
 - Keep metadata and frontend in one DX project
 
-For consultants, that is a credible answer when a client asks: *"Can we host this on Salesforce instead of another platform?"*
+That is a credible answer when someone asks: *"Can we host this on Salesforce?"*
 
-## What I ported
+---
 
-From the Vercel app I kept:
+## What the sample includes
 
-1. **The immersive web CV** (certifications, skills, timeline, Consultant Cloud branding)
-2. **PDF export** using html2canvas + jsPDF (with a print layout that avoids Tailwind oklab colours)
-3. **Static content** in TypeScript for v1 (no Apex required to get started)
+1. Immersive web CV (certifications, skills, timeline, Consultant Cloud branding)
+2. PDF export in the browser (print layout uses inline hex colours so html2canvas does not hit Tailwind `oklch` issues)
+3. Static content in TypeScript for v1 (no Apex required)
 
-What stayed on Vercel for now:
+Auth and registration Apex from the B2X template are kept optional and off the default deploy path. A public CV should stay read only.
 
-- Password protected **admin editing**
-- **Vercel Blob** persistence
-- Custom domain at ciaran-fitzgerald.com
+---
 
-That split is intentional: production portfolio on Vercel, Salesforce sample for the ecosystem.
+## How someone forks it
 
-## How the Salesforce project is structured
+1. Fork https://github.com/fizzy2562/hosted-cv-salesforce
+2. Edit `default-cv.ts` and replace assets
+3. Run `./scripts/build-and-sync-bundle.sh`
+4. Deploy the UIBundle + Experience Cloud metadata
+5. Open `https://YOUR_DOMAIN.my.site.com/hostedcvsalesforce/`
 
-I scaffolded with the CLI:
+Full steps: [docs/HOST_YOUR_OWN_CV.md](HOST_YOUR_OWN_CV.md)
 
-```bash
-sf template generate project --name hosted-cv-salesforce --template reactb2x
-```
+Security checklist: [SECURITY.md](../SECURITY.md)
 
-The React app lives under:
+---
 
-`force-app/main/default/webapplications/hostedcvsalesforce/`
+## Lessons from the build
 
-Companion Experience Cloud metadata ships alongside it (`digitalExperiences`, `networks`, `sites`), which is the important difference from an internal employee app template.
+### 1. Deploy UIBundle, not the experimental WebApplication folder
 
-## Local dev workflow
+GA orgs recognise `UIBundle`. Build under `webapplications/`, sync `dist/` into `uiBundles/`, then deploy.
 
-```bash
-cd force-app/main/default/webapplications/hostedcvsalesforce
-npm install
-npm run dev
-```
+### 2. PDF capture needs isolation from page CSS
 
-You get the same fast Vite loop you expect from any React project. When you are ready:
+html2canvas cannot parse `oklch()`. Clone the print document into a clean iframe before capture.
 
-```bash
-npm run build
-sf project deploy start --source-dir force-app --target-org my-sandbox
-```
+### 3. Keep the guest surface small
 
-## Lessons from the port
+Self registration off. No auth Apex on the guest profile. Static content only.
 
-### 1. PDF capture still needs a plain CSS print layout
-
-Tailwind v4 uses oklab colours that html2canvas cannot parse. The fix (on both Vercel and Salesforce) is a dedicated print component with inline hex/rgb styles only.
-
-### 2. Two repos, two jobs
-
-- **hosted-cv** (Vercel): live site, admin, domain
-- **hosted-cv-salesforce** (this repo): teaching, deploy to Experience Cloud, promote to the community
-
-### 3. Great sample app for Consultant Cloud
-
-This is a small, complete, visually polished app. It is more approachable than enterprise sample data models, but still shows real Multi-Framework metadata and deploy steps.
-
-## Try it yourself
-
-1. Clone [github.com/fizzy2562/hosted-cv-salesforce](https://github.com/fizzy2562/hosted-cv-salesforce)
-2. Deploy to a sandbox
-3. Swap in your `default-cv.ts` content and assets
-4. Publish your Experience Cloud site
-
-## What is next
-
-Possible extensions for a follow up post:
-
-- Store CV sections in **Custom Metadata** or Custom Objects
-- Add an authenticated admin route using the template auth shell
-- Wire certification dates from a **Trailhead API** or manual CMS records
-- Compare Lighthouse scores: LWR vs React Multi-Framework
+---
 
 ## Closing
 
-Multi-Framework GA does not replace every Vercel or Netlify site. It does give Salesforce professionals a legitimate path to ship React experiences on platform, with Experience Cloud as the host.
+Multi-Framework gives Salesforce professionals a legitimate path to ship React experiences on platform, with Experience Cloud as the host.
 
-If you are studying for certs or building your consulting brand, having a repo that proves you can do both (modern React and Salesforce deploy) is a strong signal to recruiters and clients.
+If you are studying for certs or building your consulting brand, a public repo that proves you can do both (modern React and Salesforce deploy) is a strong signal.
 
-**Repo:** hosted-cv-salesforce  
-**Live reference:** https://ciaran-fitzgerald.com/  
+**Repo:** https://github.com/fizzy2562/hosted-cv-salesforce  
 **Community:** https://www.consultantcloud.io

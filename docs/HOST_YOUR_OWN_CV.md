@@ -2,7 +2,7 @@
 
 This guide is for Salesforce professionals who want to fork this repo, put their own content in, and publish a recruiter facing CV on Experience Cloud with Multi-Framework React.
 
-If you want the simplest path (custom domain, admin editor, no Salesforce org required), use the Vercel sister project instead: [fizzy2562/hosted-cv](https://github.com/fizzy2562/hosted-cv).
+Read [SECURITY.md](../SECURITY.md) before you deploy or promote the project widely.
 
 ---
 
@@ -63,6 +63,8 @@ Keep the same filenames, or update the imports in `default-cv.ts` and `CVWebExpe
 
 Copy rules for this project: prefer colons and "to" for date ranges. Avoid em dashes and hyphen separators in prose.
 
+The demo ships with real sample CV content so you can see a finished result. Replace it before you share your own URL.
+
 ---
 
 ## 3. Preview locally
@@ -105,7 +107,9 @@ That runs `npm run build` and copies `dist/` into `uiBundles/hostedcvsalesforce/
 
 ---
 
-## 6. Deploy
+## 6. Deploy (UI + site only)
+
+Do **not** deploy `optional/auth-apex/` for a public CV.
 
 ```bash
 # 1) React UIBundle
@@ -113,13 +117,12 @@ sf project deploy start \
   --source-dir force-app/main/default/uiBundles \
   --target-org my-cv-org
 
-# 2) Experience Cloud site + auth Apex
+# 2) Experience Cloud site metadata only
 sf project deploy start \
   --source-dir force-app/main/default/digitalExperienceConfigs \
   --source-dir force-app/main/default/digitalExperiences \
   --source-dir force-app/main/default/networks \
   --source-dir force-app/main/default/sites \
-  --source-dir force-app/main/default/classes \
   --target-org my-cv-org
 ```
 
@@ -130,6 +133,8 @@ https://YOUR_MY_DOMAIN.my.site.com/hostedcvsalesforce/
 ```
 
 Confirm the network is **Live** in Setup → Digital Experiences → All Sites.
+
+Then review the **Guest User** profile: for a static CV it should not create or edit business data.
 
 ---
 
@@ -160,20 +165,6 @@ sf project deploy start \
 ```
 
 Hard refresh the site (Cmd+Shift+R) so browsers pick up new hashed assets.
-
----
-
-## Two hosting options (pick one)
-
-| | Salesforce (this repo) | Vercel ([hosted-cv](https://github.com/fizzy2562/hosted-cv)) |
-| --- | --- | --- |
-| Best for | Learning Multi-Framework, staying on platform | Personal brand site, custom domain |
-| Host | Experience Cloud | Vercel |
-| Content | Edit TypeScript file | Edit TypeScript + optional admin UI |
-| Domain | `*.my.site.com` (or custom Experience domain) | Easy custom domain |
-| Audience | Salesforce practitioners | Recruiters + anyone |
-
-Many people will use Vercel for the live CV and this repo as a portfolio / community sample.
 
 ---
 

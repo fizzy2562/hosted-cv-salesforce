@@ -16,3 +16,6 @@ node_modules/
 
 # Experimental WebApplication scaffold — org supports UIBundle (GA) instead
 force-app/main/default/webapplications/**
+
+# Never auto-include optional auth Apex in source tracking deploys
+optional/**
