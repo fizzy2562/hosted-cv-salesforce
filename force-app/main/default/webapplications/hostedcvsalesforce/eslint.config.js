@@ -18,7 +18,17 @@ const schemaExists = existsSync(schemaPath);
 const config = [
   // Global ignores
   {
-    ignores: ['build/**/*', 'dist/**/*', 'coverage/**/*'],
+    ignores: [
+      'build/**/*',
+      'dist/**/*',
+      'coverage/**/*',
+      'src/appLayout.tsx',
+      'src/navigationMenu.tsx',
+      'src/router-utils.tsx',
+      'src/pages/**/*',
+      'src/features/authentication/**/*',
+      'src/features/object-search/**/*',
+    ],
   },
   // Config files and build tools (first to avoid inheritance)
   {

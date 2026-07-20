@@ -77,6 +77,15 @@ npm run dev
 
 Open http://localhost:5173 and check layout, links, and PDF download.
 
+Optional validation before you deploy:
+
+```bash
+npm run lint
+npm test -- --run
+npm run build
+npm run test:e2e
+```
+
 ---
 
 ## 4. Connect your org
