@@ -154,8 +154,9 @@ Defaults use `hostedcvsalesforce` as the site path and bundle name. To change th
 - `digitalExperienceConfigs/...urlPathPrefix`
 - `sites/...urlPathPrefix`
 - `networks/...`
-- `content.json` → `appSpace` must stay `c__BUNDLE_FOLDER_NAME`
-- Folder names under `uiBundles/` and matching `.uibundle-meta.xml`
+- `uiBundles/BUNDLE_FOLDER_NAME/` and the matching `.uibundle-meta.xml` filename
+- `digitalExperiences/.../content.json` → `componentInstance.appSpace` must match the UIBundle folder as `c__BUNDLE_FOLDER_NAME`
+- `ui-bundle.json` can stay as-is unless you intentionally change routing or output folder behaviour
 
 For a first publish, keep the names and only change CV content.
 
