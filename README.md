@@ -4,6 +4,8 @@ Fork this repo, replace the CV content, and publish a recruiter facing React CV 
 
 **Demo:** https://d0y000002jj75uae-dev-ed.my.site.com/hostedcvsalesforce/
 
+![Hosted CV on Salesforce demo screenshot](docs/images/demo-screenshot.png)
+
 Also see the production portfolio site: https://ciaran-fitzgerald.com/
 
 ---
