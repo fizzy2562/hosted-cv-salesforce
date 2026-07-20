@@ -24,14 +24,6 @@ export function SiteNav({ onDownload, downloading, name }: SiteNavProps) {
           >
             Certs
           </a>
-          <a
-            href="https://ciaran-fitzgerald.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="cc-btn-outline px-3 py-1.5 text-xs sm:px-4 sm:text-sm"
-          >
-            Live site
-          </a>
           <button
             type="button"
             onClick={onDownload}
